@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { GraduationCap, BookOpen, Users, TrendingUp } from 'lucide-react';
+import { Header } from '@/components/user/home/Header';
 
 export default function Home() {
   return (
+    <>
+    <Header />
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-accent/5 py-20">
@@ -105,5 +108,6 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   );
 }
