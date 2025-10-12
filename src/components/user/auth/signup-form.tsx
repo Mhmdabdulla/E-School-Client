@@ -3,8 +3,8 @@ import { ArrowRight, Eye, EyeOff } from "lucide-react"
 import { Input } from "../../ui/input"
 import { Label } from "../../ui/label"
 import { useState } from "react"
-// import { googleLogin, registerUser } from "../../../services/authServices"
-// import type { AxiosResponse } from "axios"
+import { googleLogin, registerUser } from "../../../services/authServices"
+import type { AxiosResponse } from "axios"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -87,11 +87,11 @@ type FormData = z.infer<typeof formSchema>;
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false)
-//     const [showOtpDialog, setShowOtpDialog] = useState(false);
-//   const [userEmail, setUserEmail] = useState("");
-  // const navigate = useNavigate()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [showOtpDialog, setShowOtpDialog] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [userEmail, setUserEmail] = useState("");
 
   const {
     register,
@@ -104,39 +104,31 @@ const SignupForm = () => {
   }
 
 
-    const onSubmit = ()=>{
-     toast.error('you clicked ', {
+
+
+  const onSubmit = async (data: FormData) => {
+    if (loading) return
+    setLoading(true)
+    const { firstName, lastName, email, password } = data
+    const response: AxiosResponse = await registerUser(`${firstName} ${lastName}`, email, password)
+    setLoading(false)
+    console.log('status = ',response.status)
+    if (response.status === 201) {
+      // const data = { email, time: 120, length: 6 }
+      // navigate("/verify-otp", { state: data })
+              setUserEmail(email);
+        setShowOtpDialog(true);
+    } else {
+      console.log(response.data.message)
+      toast.error(response.data.message, {
         position: "top-right",
         duration: 2000,
         style: {
           color: "red",
         },
-  })
-}
-
-//   const onSubmit = async (data: FormData) => {
-//     if (loading) return
-//     setLoading(true)
-//     const { firstName, lastName, email, password } = data
-//     const response: AxiosResponse = await registerUser(`${firstName} ${lastName}`, email, password)
-//     setLoading(false)
-//     console.log('status = ',response.status)
-//     if (response.status === 201) {
-//       // const data = { email, time: 120, length: 6 }
-//       // navigate("/verify-otp", { state: data })
-//               setUserEmail(email);
-//         setShowOtpDialog(true);
-//     } else {
-//       console.log(response.data.message)
-//       toast.error(response.data.message, {
-//         position: "top-right",
-//         duration: 2000,
-//         style: {
-//           color: "red",
-//         },
-//       })
-//     }
-//   }
+      })
+    }
+  }
 
   return (
     <motion.div
@@ -289,8 +281,7 @@ const SignupForm = () => {
           <Button
             variant="outline"
             className="w-full cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-300 border-gray-200 dark:border-gray-800"
-            // onClick={googleLogin}
-            onClick={()=>console.log('you clicked')}
+            onClick={googleLogin}
           >
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
               <path

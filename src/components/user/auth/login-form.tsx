@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -11,8 +11,8 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-// import { googleLogin, login } from '@/services/authServices';
-// import { useAppDispatch } from '@/redux/store';
+import { googleLogin, login } from '@/services/authServices';
+import { useAppDispatch } from '@/redux/store';
 // import { fetchCartItems } from '@/redux/thunks/cartThunk';
 // import ForgotPasswordDialog from '@/components/common/forgot-password-dialog';
 
@@ -79,8 +79,8 @@ type FormData = z.infer<typeof formSchema>;
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-//   const dispatch = useAppDispatch();
-//   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -91,24 +91,22 @@ const LoginForm = () => {
   });
 
 
-//   const onSubmit = async (data: FormData) => {
-    const onSubmit = async () => {
-    // const { email, password } = data;
-    // const response = await login(email, password, dispatch);
+  const onSubmit = async (data: FormData) => {
+    const { email, password } = data;
+    const response = await login(email, password, dispatch);
     
-    // if (response.status === 200) {
+    if (response.status === 200) {
     //   dispatch(fetchCartItems());
-    //   navigate('/');
-    // } else {
-    //   toast.error(response.data.message || 'Invalid credentials', {
-    toast.error( 'Invalid credentials', {
+      navigate('/');
+    } else {
+      toast.error(response.data.message || 'Invalid credentials', {
         position: 'top-right',
         style: {
           color: 'red',
         },
         duration: 2000,
       });
-    // }
+    }
   };
 
   return (
@@ -241,8 +239,7 @@ const LoginForm = () => {
         <Button
           variant="outline"
           className="w-full cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-300 border-gray-200 dark:border-gray-800"
-        //   onClick={googleLogin}
-           onClick={()=>console.log('clicked the button')}
+          onClick={googleLogin}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
