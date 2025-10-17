@@ -3,11 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,67 +13,8 @@ import { googleLogin, login } from '@/services/authServices';
 import { useAppDispatch } from '@/redux/store';
 // import { fetchCartItems } from '@/redux/thunks/cartThunk';
 import ForgotPasswordDialog from './forgot-password-dialog';
+import { loginSchema,type LoginSchemaType } from "@/schemas/auth";
 
-const passwordSchema = z
-  .string()
-  .trim()
-  .superRefine((val, ctx) => {
-    if (val.length < 8) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.too_small,
-        minimum: 8,
-        origin: "string", 
-        inclusive: true,
-        message: "Password must be at least 8 characters long",
-      });
-    }
-
-    if (!/[a-zA-Z]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one letter",
-      });
-    }
-
-    if (!/[0-9]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one number",
-      });
-    }
-
-    if (!/[\W_]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one special character",
-      });
-    }
-
-    if (!/[A-Z]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one uppercase letter",
-      });
-    }
-
-    if (/password|123456|qwerty|letmein/i.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password cannot contain common patterns",
-      });
-    }
-  });
-
- const formSchema = z.object({
-
-  email: z
-    .string()
-    .trim()
-    .email({ message: "Please enter a valid email address" }),
-  password: passwordSchema,
-});
-
-type FormData = z.infer<typeof formSchema>;
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -86,12 +25,12 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(loginSchema),
   });
 
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginSchemaType) => {
     const { email, password } = data;
     const response = await login(email, password, dispatch);
     

@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 import { forgotPassword } from "@/services/authServices"
 import { toast } from "sonner"
 
@@ -17,15 +16,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@radix-ui/react-label"
+import { forgotPasswordSchema, type ForgotPasswordSchemaType } from "@/schemas/auth";
 
-const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .email("Please enter a valid email address")
-    .min(1, "Email is required"),
-})
 
-type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
 
 export default function ForgotPasswordDialog() {
   const [isLoading, setIsLoading] = useState(false)
@@ -35,11 +28,11 @@ export default function ForgotPasswordDialog() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ForgotPasswordFormData>({
+  } = useForm<ForgotPasswordSchemaType>({
     resolver: zodResolver(forgotPasswordSchema),
   })
 
-  const onSubmit = async (data: ForgotPasswordFormData) => {
+  const onSubmit = async (data: ForgotPasswordSchemaType) => {
     try {
       setIsLoading(true)
       const response = await forgotPassword(data.email)

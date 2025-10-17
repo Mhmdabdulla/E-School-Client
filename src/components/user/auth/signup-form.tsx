@@ -1,88 +1,18 @@
-import { Button } from "../../ui/button"
+import { Button } from "@/components/ui/button"
 import { ArrowRight, Eye, EyeOff } from "lucide-react"
-import { Input } from "../../ui/input"
-import { Label } from "../../ui/label"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import { googleLogin, registerUser } from "../../../services/authServices"
+import { googleLogin, registerUser } from "@/services/authServices"
 import type { AxiosResponse } from "axios"
-import * as z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { motion } from "framer-motion"
 import OtpVerificationDialog from "./otp-verification-dialog"
+import { signupSchema, type SignupSchemaType } from "@/schemas/auth";
 
 
-
-  const passwordSchema = z
-  .string()
-  .trim()
-  .superRefine((val, ctx) => {
-    if (val.length < 8) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.too_small,
-        minimum: 8,
-        origin: "string", 
-        inclusive: true,
-        message: "Password must be at least 8 characters long",
-      });
-    }
-
-    if (!/[a-zA-Z]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one letter",
-      });
-    }
-
-    if (!/[0-9]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one number",
-      });
-    }
-
-    if (!/[\W_]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one special character",
-      });
-    }
-
-    if (!/[A-Z]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one uppercase letter",
-      });
-    }
-
-    if (/password|123456|qwerty|letmein/i.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password cannot contain common patterns",
-      });
-    }
-  });
-
- const formSchema = z.object({
-  firstName: z
-    .string()
-    .trim()
-    .min(1, { message: "First name is required" })
-    .regex(/[a-zA-Z]/, { message: "First name must contain at least one letter" }),
-  lastName: z
-    .string()
-    .trim()
-    .min(1, { message: "Last name is required" })
-    .regex(/[a-zA-Z]/, { message: "Last name must contain at least one letter" }),
-  email: z
-    .string()
-    .trim()
-    .email({ message: "Please enter a valid email address" }),
-  password: passwordSchema,
-});
-
-type FormData = z.infer<typeof formSchema>;
 
 
 const SignupForm = () => {
@@ -95,7 +25,7 @@ const SignupForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(formSchema) })
+  } = useForm<SignupSchemaType>({ resolver: zodResolver(signupSchema) })
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -104,7 +34,7 @@ const SignupForm = () => {
 
 
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: SignupSchemaType) => {
     if (loading) return
     setLoading(true)
     const { firstName, lastName, email, password } = data

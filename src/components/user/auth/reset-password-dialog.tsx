@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
@@ -18,66 +17,9 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {resetPasswordSchema, type ResetPasswordSchemaType} from "@/schemas/auth"
 
-const passwordSchema = z
-  .string()
-  .trim()
-  .superRefine((val, ctx) => {
-    if (val.length < 8) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.too_small,
-        minimum: 8,
-        origin: "string", 
-        inclusive: true,
-        message: "Password must be at least 8 characters long",
-      });
-    }
 
-    if (!/[a-zA-Z]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one letter",
-      });
-    }
-
-    if (!/[0-9]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one number",
-      });
-    }
-
-    if (!/[\W_]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one special character",
-      });
-    }
-
-    if (!/[A-Z]/.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password must contain at least one uppercase letter",
-      });
-    }
-
-    if (/password|123456|qwerty|letmein/i.test(val)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password cannot contain common patterns",
-      });
-    }
-  });
-
-const resetPasswordSchema = z.object({
-  password: passwordSchema,
-  confirmPassword: passwordSchema
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
-
-type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 const ResetPasswordDialog = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -88,7 +30,7 @@ const ResetPasswordDialog = () => {
   const [open, setOpen] = useState<boolean>(true); // Track the dialog open state
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordFormData>({
+  const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordSchemaType>({
     resolver: zodResolver(resetPasswordSchema),
   });
 
@@ -100,7 +42,7 @@ const ResetPasswordDialog = () => {
     setToken(token);
   }, [location]);
 
-  const onSubmit = async (data: ResetPasswordFormData) => {
+  const onSubmit = async (data: ResetPasswordSchemaType) => {
     if (!token) {
       setError("Invalid or expired token");
       return;
