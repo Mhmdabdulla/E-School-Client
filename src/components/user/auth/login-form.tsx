@@ -14,7 +14,7 @@ import { Label } from '@/components/ui/label';
 import { googleLogin, login } from '@/services/authServices';
 import { useAppDispatch } from '@/redux/store';
 // import { fetchCartItems } from '@/redux/thunks/cartThunk';
-// import ForgotPasswordDialog from '@/components/common/forgot-password-dialog';
+import ForgotPasswordDialog from './forgot-password-dialog';
 
 const passwordSchema = z
   .string()
@@ -273,7 +273,7 @@ const LoginForm = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.6 }}
       >
-        {/* <ForgotPasswordDialog /> */}
+        <ForgotPasswordDialog />
       </motion.div>
     </motion.div>
   );

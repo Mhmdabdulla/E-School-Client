@@ -5,6 +5,7 @@ import { GraduationCap } from 'lucide-react';
 import { Header } from '@/components/user/home/Header';
 import LoginForm from '@/components/user/auth/login-form';
 import SignupForm from '@/components/user/auth/signup-form';
+import ResetPasswordDialog from '@/components/user/auth/reset-password-dialog';
 
 export default function Auth() {
   const [searchParams] = useSearchParams();
@@ -12,6 +13,7 @@ export default function Auth() {
 
   return (
     <>
+    <div className="min-h-screen ">
       <Header />
       <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
         <Card className="w-full max-w-md">
@@ -43,6 +45,8 @@ export default function Auth() {
             </Tabs>
           </CardContent>
         </Card>
+      </div>
+      <ResetPasswordDialog />
       </div>
     </>
   );
