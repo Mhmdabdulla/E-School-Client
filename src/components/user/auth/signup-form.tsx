@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { motion } from "framer-motion"
-// import OtpVerificationDialog from "../../common/otp-verification-dialog"
+import OtpVerificationDialog from "./otp-verification-dialog"
 
 
 
@@ -88,9 +88,7 @@ type FormData = z.infer<typeof formSchema>;
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [showOtpDialog, setShowOtpDialog] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userEmail, setUserEmail] = useState("");
 
   const {
@@ -114,9 +112,7 @@ const SignupForm = () => {
     setLoading(false)
     console.log('status = ',response.status)
     if (response.status === 201) {
-      // const data = { email, time: 120, length: 6 }
-      // navigate("/verify-otp", { state: data })
-              setUserEmail(email);
+        setUserEmail(email);
         setShowOtpDialog(true);
     } else {
       console.log(response.data.message)
@@ -305,11 +301,11 @@ const SignupForm = () => {
             <span className="ml-2">Google</span>
           </Button>
         </motion.div>
-        {/* <OtpVerificationDialog
+        <OtpVerificationDialog
   open={showOtpDialog}
   onOpenChange={(open) => setShowOtpDialog(open)}
   email={userEmail}
-/> */}
+/>
 
       </div>
     </motion.div>
