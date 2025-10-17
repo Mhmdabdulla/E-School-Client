@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, User, LogOut, Menu } from 'lucide-react';
 import {
@@ -13,16 +13,26 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { useState } from 'react';
+import { userLogout } from '@/services/authServices';
+import { useDispatch } from 'react-redux';
+
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const user = {
     role: 'instructor'
   };
 
-  const handleLogout = () => {
-    console.log('log out');
+  const handleLogout = async() => {
+    const response = await userLogout(dispatch);
+    if (response.status === 200) {
+      navigate("/");
+      localStorage.clear();
+    }
   };
 
   return (
