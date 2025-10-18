@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GraduationCap } from 'lucide-react';
@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/redux/store';
 
 export default function Auth() {
-  const [searchParams] = useSearchParams();
-  const mode = searchParams.get('mode') || 'login';
+  const location = useLocation()
+  const mode = location.state?.formState || "login";
   const [loading, setLoading] = useState<boolean>(true)
   const isAdmin = localStorage.getItem("adminLoggedIn")
   const user = useAppSelector((state) => state.auth.user)

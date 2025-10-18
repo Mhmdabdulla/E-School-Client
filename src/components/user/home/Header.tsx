@@ -33,7 +33,7 @@ const Header = () => {
   };
 
   const handleSignInClick = () => {
-    navigate("/login", { state: { formState: "signIn" } });
+    navigate("/login", { state: { formState: "login" } });
   };
 
   const isActive = (path:string) => location.pathname === path;
