@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GraduationCap } from 'lucide-react';
-import { Header } from '@/components/user/home/Header';
+import Header from '@/components/user/home/Header';
 import LoginForm from '@/components/user/auth/login-form';
 import SignupForm from '@/components/user/auth/signup-form';
 import ResetPasswordDialog from '@/components/user/auth/reset-password-dialog';

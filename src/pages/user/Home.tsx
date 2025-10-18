@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { GraduationCap, BookOpen, Users, TrendingUp } from 'lucide-react';
-import { Header } from '@/components/user/home/Header';
+import Header from '@/components/user/home/Header';
 
 export default function Home() {
   return (
