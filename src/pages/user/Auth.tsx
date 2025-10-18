@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GraduationCap } from 'lucide-react';
@@ -6,10 +6,29 @@ import Header from '@/components/user/home/Header';
 import LoginForm from '@/components/user/auth/login-form';
 import SignupForm from '@/components/user/auth/signup-form';
 import ResetPasswordDialog from '@/components/user/auth/reset-password-dialog';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '@/redux/store';
 
 export default function Auth() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode') || 'login';
+  const [loading, setLoading] = useState<boolean>(true)
+  const isAdmin = localStorage.getItem("adminLoggedIn")
+  const user = useAppSelector((state) => state.auth.user)
+  const navigate = useNavigate()
+
+    useEffect(() => {
+    if (user && !isAdmin) {
+      navigate("/")
+    } else {
+      setLoading(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (loading) {
+    return <div></div>
+  }
 
   return (
     <>
