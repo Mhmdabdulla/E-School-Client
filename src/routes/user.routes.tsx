@@ -6,6 +6,7 @@ import UserDashboard from "@/components/user/dashboard/dashboard-page"
 import AccountSettings from "@/components/user/profile/account-settings";
 import UserCourses from "@/components/user/enrolled-courses/enrolled-courses-page"
 import { InstructorsPage } from "@/components/user/instructor/instructor-page";
+import MessagingPage from "@/components/user/messages/messaging-page";
 
 export const userRoutes = (
     <>
@@ -17,6 +18,8 @@ export const userRoutes = (
     <Route path="settings" element={<AccountSettings />} />
     <Route path="courses" element={<UserCourses />} />
     <Route path="instructors" element={<InstructorsPage/>}/>
+    <Route path="messages" element={<MessagingPage />} />
+    <Route path="messages/:chatId" element={<MessagingPage />} />
     </Route>
     </Route>
     </>
