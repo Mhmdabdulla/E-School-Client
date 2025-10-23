@@ -134,7 +134,7 @@ export const refreshToken = async (dispatch: AppDispatch): Promise<AxiosResponse
     return response.data.user;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response as AxiosResponse;;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }

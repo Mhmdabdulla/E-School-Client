@@ -1,7 +1,7 @@
 import { updateUser } from "@/redux/slices/authSlice";
 import { type AppDispatch } from "../redux/store";
 import apiClient from "../lib/axios";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 
 export const updateProfile = async (formData: FormData, dispatch: AppDispatch) => {
   const response = await apiClient.put(`/users/profile`, formData, {
@@ -14,7 +14,7 @@ export const updateProfile = async (formData: FormData, dispatch: AppDispatch) =
   );
 };
 
-export const changePassword = async (currentPassword: string, newPassword: string) => {
+export const changePassword = async (currentPassword: string, newPassword: string): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.patch(
       `users/change-password`,
@@ -24,32 +24,32 @@ export const changePassword = async (currentPassword: string, newPassword: strin
     return response;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }
   
 };
 
-export const getUserProfile = async () => {
+export const getUserProfile = async (): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.get(`users/profile`, { withCredentials: true });
     return response;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }
 };
 
-export const sendInstructorApplication = async (formData: FormData) => {
+export const sendInstructorApplication = async (formData: FormData): Promise<AxiosResponse> => {
   try {
     const response = apiClient.post(`users/become-instructor`, formData, { withCredentials: true });
     return response;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }
@@ -61,7 +61,7 @@ export const getApplications = async () => {
 
 };
 
-export const getUsers = async (page:number,limit:number,searchQuery:string) => {
+export const getUsers = async (page:number,limit:number,searchQuery:string): Promise<AxiosResponse> => {
  try {
   const res = await apiClient.get(`/users`, {params: {
     page,
@@ -71,32 +71,32 @@ export const getUsers = async (page:number,limit:number,searchQuery:string) => {
   return res.data
  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }
 };
 
-export const toggleUserStatus = async (userId: string) => {
+export const toggleUserStatus = async (userId: string): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.patch(`/users/${userId}/status`, {}, { withCredentials: true });
 
     return response;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }
 };
 
-export const getUserDashboard = async () => {
+export const getUserDashboard = async (): Promise<AxiosResponse> => {
   try {
     const res = await apiClient.get("/users/dashboard");
     return res.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      return error.response;
+      return error.response as AxiosResponse;
     }
     throw error; 
   }
