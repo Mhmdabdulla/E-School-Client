@@ -5,6 +5,7 @@ import UserProfile from "@/pages/user/UserProfile";
 import UserDashboard from "@/components/user/dashboard/dashboard-page"
 import AccountSettings from "@/components/user/profile/account-settings";
 import UserCourses from "@/components/user/enrolled-courses/enrolled-courses-page"
+import { InstructorsPage } from "@/components/user/instructor/instructor-page";
 
 export const userRoutes = (
     <>
@@ -15,6 +16,7 @@ export const userRoutes = (
     <Route path="dashboard" element={<UserDashboard />} />
     <Route path="settings" element={<AccountSettings />} />
     <Route path="courses" element={<UserCourses />} />
+    <Route path="instructors" element={<InstructorsPage/>}/>
     </Route>
     </Route>
     </>
