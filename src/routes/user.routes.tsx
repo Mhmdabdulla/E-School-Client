@@ -7,6 +7,7 @@ import AccountSettings from "@/components/user/profile/account-settings";
 import UserCourses from "@/components/user/enrolled-courses/enrolled-courses-page"
 import { InstructorsPage } from "@/components/user/instructor/instructor-page";
 import MessagingPage from "@/components/user/messages/messaging-page";
+import PurchaseHistoryContent from "@/components/user/purchase-history/purchse-history-content";
 
 export const userRoutes = (
     <>
@@ -20,6 +21,7 @@ export const userRoutes = (
     <Route path="instructors" element={<InstructorsPage/>}/>
     <Route path="messages" element={<MessagingPage />} />
     <Route path="messages/:chatId" element={<MessagingPage />} />
+    <Route path="purchase-history" element={<PurchaseHistoryContent />} />
     </Route>
     </Route>
     </>
