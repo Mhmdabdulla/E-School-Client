@@ -4,6 +4,7 @@ import { UserRole } from "@/lib/constants/role";
 import UserProfile from "@/pages/user/UserProfile";
 import UserDashboard from "@/components/user/dashboard/dashboard-page"
 import AccountSettings from "@/components/user/profile/account-settings";
+import UserCourses from "@/components/user/enrolled-courses/enrolled-courses-page"
 
 export const userRoutes = (
     <>
@@ -13,6 +14,7 @@ export const userRoutes = (
     <Route index element={<Navigate to="dashboard" />} />
     <Route path="dashboard" element={<UserDashboard />} />
     <Route path="settings" element={<AccountSettings />} />
+    <Route path="courses" element={<UserCourses />} />
     </Route>
     </Route>
     </>
