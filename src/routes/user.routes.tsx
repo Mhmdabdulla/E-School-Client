@@ -8,6 +8,7 @@ import UserCourses from "@/components/user/enrolled-courses/enrolled-courses-pag
 import { InstructorsPage } from "@/components/user/instructor/instructor-page";
 import MessagingPage from "@/components/user/messages/messaging-page";
 import PurchaseHistoryContent from "@/components/user/purchase-history/purchse-history-content";
+import CertificatesPage from "@/pages/user/certificatePage";
 
 export const userRoutes = (
     <>
@@ -22,6 +23,7 @@ export const userRoutes = (
     <Route path="messages" element={<MessagingPage />} />
     <Route path="messages/:chatId" element={<MessagingPage />} />
     <Route path="purchase-history" element={<PurchaseHistoryContent />} />
+    <Route path="certificates" element={<CertificatesPage/>}/>
     </Route>
     </Route>
     </>
