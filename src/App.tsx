@@ -5,6 +5,8 @@ import { commonRoutes } from './routes/common.routes'
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { refreshToken } from './services/authServices';
+import { userRoutes } from './routes/user.routes';
+import { Toaster } from 'sonner';
 
 function App() {
 
@@ -29,8 +31,11 @@ function App() {
   return (
     <>
     <BrowserRouter>
+    <Toaster richColors position="top-right" />
+
     <Routes>
       {commonRoutes}
+      {userRoutes}
     </Routes>
     </BrowserRouter>      
     </>

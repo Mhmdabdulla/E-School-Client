@@ -1,22 +1,24 @@
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { setAuthData, logout } from "../redux/slices/authSlice";
 import {type AppDispatch } from "../redux/store";
 import apiClient from "../lib/axios";
 
 
 
-export const registerUser = async (name: string, email: string, password: string) => {
+export const registerUser = async (name: string, email: string, password: string): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.post("auth/register", { name, email, password });
 
     return response;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.response as AxiosResponse;
+    }
+    throw error; 
   }
 };
 
-export const verifyOtp = async (email: string, otp: string, dispatch: AppDispatch) => {
+export const verifyOtp = async (email: string, otp: string, dispatch: AppDispatch): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.post(`auth/verify-otp`, { email, otp });
 
@@ -28,13 +30,15 @@ export const verifyOtp = async (email: string, otp: string, dispatch: AppDispatc
     );
     localStorage.setItem("isAuthenticated", "true");
     return response;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.response as AxiosResponse;;
+    }
+    throw error; 
   }
 };
 
-export const resendOtp = async (email: string) => {
+export const resendOtp = async (email: string): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.post(`auth/resend-otp`, { email });
     return response;
@@ -54,7 +58,7 @@ export const resendOtp = async (email: string) => {
   }
 };
 
-export const adminLogin = async (email: string, password: string, dispatch: AppDispatch) => {
+export const adminLogin = async (email: string, password: string, dispatch: AppDispatch): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.post(`auth/admin/login`, { email, password });
     dispatch(
@@ -66,13 +70,15 @@ export const adminLogin = async (email: string, password: string, dispatch: AppD
     localStorage.clear();
     localStorage.setItem("isAuthenticated", "true");
     return response;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.response as AxiosResponse;;
+    }
+    throw error; 
   }
 };
 
-export const login = async (email: string, password: string, dispatch: AppDispatch) => {
+export const login = async (email: string, password: string, dispatch: AppDispatch): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.post(`auth/login`, { email, password });
     dispatch(
@@ -84,13 +90,15 @@ export const login = async (email: string, password: string, dispatch: AppDispat
     localStorage.clear();
     localStorage.setItem("isAuthenticated", "true");
     return response;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.response as AxiosResponse;;
+    }
+    throw error; 
   }
 };
 
-export const userLogout = async (dispatch: AppDispatch) => {
+export const userLogout = async (dispatch: AppDispatch): Promise<AxiosResponse> => {
   try {
     const response = await apiClient.post(`auth/logout`, {}, { withCredentials: true });
     if (response.status === 200){
@@ -99,13 +107,15 @@ export const userLogout = async (dispatch: AppDispatch) => {
     } 
 
     return response;
-  } catch (error) {
-    console.error(error);
-    throw new Error("error while logging out");
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.response as AxiosResponse;;
+    }
+    throw error; 
   }
 };
 
-export const refreshToken = async (dispatch: AppDispatch) => {
+export const refreshToken = async (dispatch: AppDispatch): Promise<AxiosResponse> => {
   try {
     const isAdmin = localStorage.getItem("adminLoggedIn");
     let data = { role: "user" };
@@ -122,10 +132,11 @@ export const refreshToken = async (dispatch: AppDispatch) => {
       })
     );
     return response.data.user;
-  } catch (error) {
-    console.log(error);
-    dispatch(logout());
-    throw new Error("Session expired. Please log in again.");
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.response as AxiosResponse;
+    }
+    throw error; 
   }
 };
 

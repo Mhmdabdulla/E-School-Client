@@ -33,12 +33,11 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginSchemaType) => {
     const { email, password } = data;
     const response = await login(email, password, dispatch);
-    
     if (response.status === 200) {
     //   dispatch(fetchCartItems());
       navigate('/');
     } else {
-      toast.error(response.data.message || 'Invalid credentials', {
+      toast.error(response?.data.message || 'Invalid credentials', {
         position: 'top-right',
         style: {
           color: 'red',
