@@ -76,7 +76,7 @@ export const updateCoursePublishStatus = async (courseId: string) => {
 
 };
 
-export const createCourse = async (data: Course) => {
+export const createCourse = async (data: FormData) => {
 
     const response = await apiClient.post("/courses", data, { withCredentials: true });
     return response;
