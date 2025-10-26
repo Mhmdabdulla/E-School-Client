@@ -1,6 +1,5 @@
 
 import apiClient from "@/lib/axios"
-import type { Lecture } from "@/types/module"
 
 export const createLesson = async(data:FormData) => {
 
@@ -8,7 +7,7 @@ export const createLesson = async(data:FormData) => {
 
   }
   
-  export const updateLesson = async (lessonId: string, data: Partial<Lecture>) => {
+  export const updateLesson = async (lessonId: string, data: FormData) => {
  
       const res = await apiClient.put(`/lessons/${lessonId}`, data)
       return res.data

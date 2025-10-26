@@ -1,6 +1,6 @@
 import type { AdvancedInformationSchemaType } from "@/schemas/course/advanced-information.schema";
 import type { BasicInformationSchemaType } from "@/schemas/course/basic-information.schema";
-// import type { CurriculumSchemaType } from "@/schemas/course";
+import type { CurriculumSchemaType } from "@/schemas/course";
 import type { PublishSchemaType } from "@/schemas/course";
 import type {  Lecture, Section } from "@/types/module";
 
@@ -89,46 +89,51 @@ export const createLessonData = (lesson:Lecture, courseId?:string,moduleId?:stri
   }
   
   
-//   export const createCurriculumData = (data: any): CurriculumSchemaType => {
-//       return {
-//           sections: data.modules.map((module: any) => ({
-//               description: module.description,
-//               id: module._id,
-//               name: module.title,
-//               lectures: module.lessons.map((lesson: any) => ({
-//                   type: lesson.contentType,
-//                   description: lesson.description || "default course description",
-//                   id: lesson._id,
-//                   name: lesson.title,
-//                   isExpanded: true,
-//                   duration: lesson.duration,
-//                   content: `http://localhost:5000/api/lessons/${lesson._id}/stream`,
-//               })),
-//           })),
-//       };
-//   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export const createCurriculumData = (data: any): CurriculumSchemaType => {
+      return {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          sections: data.modules.map((module: any) => ({
+              description: module.description,
+              id: module._id,
+              name: module.title,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              lectures: module.lessons.map((lesson: any) => ({
+                  type: lesson.contentType,
+                  description: lesson.description || "default course description",
+                  id: lesson._id,
+                  name: lesson.title,
+                  isExpanded: true,
+                  duration: lesson.duration,
+                  content: `http://localhost:5000/api/lessons/${lesson._id}/stream`,
+              })),
+          })),
+      };
+  }
   
   
-// export const createBasicInformationData = (data: any): BasicInformationSchemaType => {
-//       return {
-//           title: data.title,
-//           subtitle: data.subtitle,
-//           category: data.categoryId,
-//           subCategory: data.subCategoryId,
-//           topic: data.title, 
-//           language: data.language,
-//           level: data.level,
-//       };
-//   }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createBasicInformationData = (data: any): BasicInformationSchemaType => {
+      return {
+          title: data.title,
+          subtitle: data.subtitle,
+          category: data.categoryId,
+          subCategory: data.subCategoryId,
+          topic: data.title, 
+          language: data.language,
+          level: data.level,
+      };
+  }
   
-// export const createAdvancedInformationData = (data: any): AdvancedInformationSchemaType => {
-//       return {
-//           description: data.description,
-//           teachItems: data.whatYouWillLearn.map((item: string, index: number) => ({
-//               id: index + 1, 
-//               content: JSON.parse(item).content,
-//           })),
-//           thumbnail: data.thumbnail,
-//           trailer:data.trailer,
-//       };
-//   }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createAdvancedInformationData = (data: any): AdvancedInformationSchemaType => {
+      return {
+          description: data.description,
+          teachItems: data.whatYouWillLearn.map((item: string, index: number) => ({
+              id: index + 1, 
+              content: JSON.parse(item).content,
+          })),
+          thumbnail: data.thumbnail,
+          trailer:data.trailer,
+      };
+  }

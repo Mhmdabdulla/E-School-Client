@@ -1,4 +1,4 @@
-import type { Module, ModuleData } from "@/types/module"
+import type { ModuleData } from "@/types/module"
 import apiClient from "@/lib/axios"
 
 export const createModule = async(data:ModuleData) => {
@@ -8,7 +8,7 @@ export const createModule = async(data:ModuleData) => {
 
   }
   
-  export const updateModule = async (moduleId:string, data: Partial<Module>) => {
+  export const updateModule = async (moduleId:string, data: Partial<ModuleData>) => {
 
       const res = await apiClient.put(`/modules/${moduleId}`, data)
       return res.data

@@ -1,4 +1,4 @@
-import type { Course, GetCoursesRequestParams, UserCourseFilterParams } from "@/types/course";
+import type {  GetCoursesRequestParams, UserCourseFilterParams } from "@/types/course";
 import apiClient from "@/lib/axios";
 import axios, { AxiosError, type AxiosResponse } from "axios";
 
@@ -83,7 +83,7 @@ export const createCourse = async (data: FormData) => {
 
 };
 
-export const updateCourse = async (courseId: string, data: Partial<Course>) => {
+export const updateCourse = async (courseId: string, data: FormData) => {
   try {
     const res = await apiClient.put(`/courses/${courseId}`, data);
     return res.data;
