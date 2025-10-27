@@ -7,6 +7,7 @@ import CoursesPage from "@/pages/instructor/CoursePage";
 import SingleCoursePage from "@/pages/instructor/CourseDetails";
 import EditCoursePage from "@/pages/instructor/EditCoursePage";
 import EarningsPage from "@/components/instructor/earnings/earnings-page";
+import InstructorMessagesPage from "@/pages/instructor/MessagesPage";
 
 
 
@@ -18,5 +19,7 @@ export const instructorRoutes = (
     <Route path="/instructor/my-courses/:courseId" element={<SingleCoursePage />} />
     <Route path="/instructor/my-courses/:courseId/edit" element={< EditCoursePage/>} />
     <Route path="/instructor/earnings" element={<EarningsPage/>}/>
+    <Route path="/instructor/messages" element={<InstructorMessagesPage />} />
+    <Route path="/instructor/messages/:chatId" element={<InstructorMessagesPage />} />
   </Route>
 );
