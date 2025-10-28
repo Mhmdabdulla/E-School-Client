@@ -2,7 +2,7 @@ import apiClient from "@/lib/axios";
 import { type IInstructor } from "@/types/instructor";
 import axios, { type AxiosResponse } from "axios";
 
-export const getInstructorDetails = async (userId: string) => {
+export const getInstructorDetails = async (userId: string | undefined) => {
   try {
     const res: AxiosResponse = await apiClient.get(`/instructors/${userId}/profile`);
     return res.data;
@@ -66,7 +66,7 @@ export const fetchEnrolledInstructors = async (page:number,limit:number,searchQu
 };
 
 
-export const updateInstructorProfile = async(instructorId: string, data: Partial<IInstructor>):Promise<AxiosResponse> => {
+export const updateInstructorProfile = async(instructorId: string | undefined, data: Partial<IInstructor>) => {
   try {
     const res = await apiClient.put(`instructors/${instructorId}/profile`, {data})
     return res.data
