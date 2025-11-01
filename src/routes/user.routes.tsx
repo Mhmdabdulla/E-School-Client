@@ -9,11 +9,17 @@ import { InstructorsPage } from "@/components/user/instructor/instructor-page";
 import MessagingPage from "@/components/user/messages/messaging-page";
 import PurchaseHistoryContent from "@/components/user/purchase-history/purchse-history-content";
 import CertificatesPage from "@/pages/user/certificatePage";
+import WatchCoursePage from "@/components/user/watch-course/watch-course-page";
 
 export const userRoutes = (
     <>
     <Route element={<ProtectedRoute role={[UserRole.USER]} />}>
     <Route path="/profile" element={<UserProfile />} />
+    <Route path="/courses/watch/:courseId" element={<WatchCoursePage />} />
+    {/* <Route path="/payment-success" element={<PaymentSuccess />} />
+    <Route path="/payment-cancel" element={<PaymentFailed />} /> */}
+
+
     <Route path="/user" element={<UserProfile />}>
     <Route index element={<Navigate to="dashboard" />} />
     <Route path="dashboard" element={<UserDashboard />} />
