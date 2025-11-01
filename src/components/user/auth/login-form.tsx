@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { googleLogin, login } from '@/services/authServices';
 import { useAppDispatch } from '@/redux/store';
-// import { fetchCartItems } from '@/redux/thunks/cartThunk';
+import { fetchCartItems } from '@/redux/thunks/cartThunk';
 import ForgotPasswordDialog from './forgot-password-dialog';
 import { loginSchema,type LoginSchemaType } from "@/schemas/auth";
 
@@ -34,7 +34,7 @@ const LoginForm = () => {
     const { email, password } = data;
     const response = await login(email, password, dispatch);
     if (response.status === 200) {
-    //   dispatch(fetchCartItems());
+      dispatch(fetchCartItems());
       navigate('/');
     } else {
       toast.error(response?.data.message || 'Invalid credentials', {

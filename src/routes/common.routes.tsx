@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 import ProtectedRoute from "./protected.routes";
 import { UserRole } from "@/lib/constants/role";
 import UserCourseDetailsPage from "@/pages/user/CourseDetails";
+import CartPage from "@/pages/user/CartPage";
 
 export const commonRoutes = (
   <>
@@ -16,7 +17,7 @@ export const commonRoutes = (
     >
       <Route path="/courses" element={<UserCoursesPage />} />
       <Route path="/courses/:courseId" element={<UserCourseDetailsPage />} />
-      {/* <Route path="/cart" element={<CartPage />} /> */}
+      <Route path="/cart" element={<CartPage />} />
       {/* <Route path="/wishlist" element={<WishlistPage />} /> */}
     </Route>
 
