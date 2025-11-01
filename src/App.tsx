@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { refreshToken } from './services/authServices';
 import { userRoutes } from './routes/user.routes';
 import { Toaster } from 'sonner';
+import { instructorRoutes } from './routes/instructor.routes';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
     <Routes>
       {commonRoutes}
       {userRoutes}
+      {instructorRoutes}
     </Routes>
     </BrowserRouter>      
     </>

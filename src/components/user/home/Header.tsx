@@ -12,8 +12,7 @@ import { useAppSelector } from "@/redux/store";
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.user);
-  // const cartCount = useAppSelector((state) => state.cart.cartItems.length);
-  const cartCount = 3;
+  const cartCount = useAppSelector((state) => state.cart.cartItems.length);
   const isAdmin = localStorage.getItem("adminLoggedIn") === "true";
   const dispatch = useDispatch();
   const navigate = useNavigate();
