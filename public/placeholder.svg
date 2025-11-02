@@ -29,16 +29,5 @@
   />
   <circle cx="200" cy="115" r="4" fill="#1E293B" />
 
-  <!-- Text -->
-  <text
-    x="200"
-    y="170"
-    text-anchor="middle"
-    font-family="Poppins, Arial, sans-serif"
-    font-size="40"
-    font-weight="600"
-    fill="#1E293B"
-  >
-    E-School
-  </text>
+
 </svg>
