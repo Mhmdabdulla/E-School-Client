@@ -12,6 +12,8 @@ import CertificatesPage from "@/pages/user/certificatePage";
 import WatchCoursePage from "@/components/user/watch-course/watch-course-page";
 import PaymentSuccess from "@/components/common/PaymentSuccess";
 import PaymentFailed from "@/components/common/PaymentFailed";
+import BecomeInstructorPage from "@/pages/user/BecomeInstructorPage";
+import InstructorApply from "@/pages/user/InstructorApply";
 
 export const userRoutes = (
     <>
@@ -20,6 +22,8 @@ export const userRoutes = (
     <Route path="/courses/watch/:courseId" element={<WatchCoursePage />} />
     <Route path="/payment-success" element={<PaymentSuccess />} />
     <Route path="/payment-cancel" element={<PaymentFailed />} />
+    <Route path="/be-instructor" element={<BecomeInstructorPage />} />
+    <Route path="/be-instructor/apply" element={<InstructorApply/>} />
 
 
     <Route path="/user" element={<UserProfile />}>
