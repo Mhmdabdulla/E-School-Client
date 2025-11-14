@@ -8,6 +8,7 @@ import { refreshToken } from './services/authServices';
 import { userRoutes } from './routes/user.routes';
 import { Toaster } from 'sonner';
 import { instructorRoutes } from './routes/instructor.routes';
+import { adminRoutes } from './routes/admin.routes';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
       {commonRoutes}
       {userRoutes}
       {instructorRoutes}
+      {adminRoutes}
     </Routes>
     </BrowserRouter>      
     </>
