@@ -11,6 +11,7 @@ import CategoriesPage from "@/pages/admin/CategoriesPage";
 import CoursesPage from "@/pages/admin/CoursePage";
 import OrdersPage from "@/pages/admin/OrdersPage";
 import PayoutRequestsPage from "@/pages/admin/PayoutRequest";
+import SettingsPage from "@/pages/admin/AccountSettings";
 
 
 
@@ -28,6 +29,7 @@ export const adminRoutes = (
        <Route path="courses" element={<CoursesPage/>}/>
        <Route path="purchases" element={<OrdersPage/>}/>
        <Route path="payouts" element={<PayoutRequestsPage/>}/>
+       <Route path="settings" element={<SettingsPage/>}/>
        </Route>
        </Route>
     </>
