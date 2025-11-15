@@ -9,6 +9,7 @@ import Instructors from "@/pages/admin/Instructors";
 import InstructorApplicationsPage from "@/pages/admin/InstructorApplications";
 import CategoriesPage from "@/pages/admin/CategoriesPage";
 import CoursesPage from "@/pages/admin/CoursePage";
+import OrdersPage from "@/pages/admin/OrdersPage";
 
 
 
@@ -24,6 +25,7 @@ export const adminRoutes = (
        <Route path="applications" element={<InstructorApplicationsPage />} />
        <Route path="categories" element={<CategoriesPage />} />
        <Route path="courses" element={<CoursesPage/>}/>
+       <Route path="purchases" element={<OrdersPage/>}/>
        </Route>
        </Route>
     </>
