@@ -78,7 +78,7 @@ export const updateInstructorProfile = async(instructorId: string | undefined, d
   }
 }
 
-export const fetchAllInstructors = async(page:number,limit:number,searchQuery:string):Promise<AxiosResponse> => {
+export const fetchAllInstructors = async(page:number,limit:number,searchQuery:string) => {
   try {
     const res = await apiClient.get("/instructors/", {
       params:{

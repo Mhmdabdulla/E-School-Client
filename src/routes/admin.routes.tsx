@@ -5,6 +5,7 @@ import { UserRole } from "@/lib/constants/role";
 import DashboardLayout from "@/components/admin/layout/DashboardLayout";
 import Dashboard from "@/pages/admin/Dashboard";
 import UsersPage from "@/pages/admin/UserPage";
+import Instructors from "@/pages/admin/Instructors";
 
 
 export const adminRoutes = (
@@ -15,6 +16,7 @@ export const adminRoutes = (
        <Route index element={<Navigate to="/admin/dashboard" replace />} />
        <Route path="dashboard" element={<Dashboard />} />
        <Route path="users" element={<UsersPage />} />
+       <Route path="tutors" element={<Instructors />} />
        </Route>
        </Route>
     </>
