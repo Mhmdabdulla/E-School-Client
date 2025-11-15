@@ -8,6 +8,8 @@ import UsersPage from "@/pages/admin/UserPage";
 import Instructors from "@/pages/admin/Instructors";
 import InstructorApplicationsPage from "@/pages/admin/InstructorApplications";
 import CategoriesPage from "@/pages/admin/CategoriesPage";
+import CoursesPage from "@/pages/admin/CoursePage";
+
 
 
 export const adminRoutes = (
@@ -21,7 +23,7 @@ export const adminRoutes = (
        <Route path="tutors" element={<Instructors />} />
        <Route path="applications" element={<InstructorApplicationsPage />} />
        <Route path="categories" element={<CategoriesPage />} />
-       
+       <Route path="courses" element={<CoursesPage/>}/>
        </Route>
        </Route>
     </>
