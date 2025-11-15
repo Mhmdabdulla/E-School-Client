@@ -7,6 +7,7 @@ import Dashboard from "@/pages/admin/Dashboard";
 import UsersPage from "@/pages/admin/UserPage";
 import Instructors from "@/pages/admin/Instructors";
 import InstructorApplicationsPage from "@/pages/admin/InstructorApplications";
+import CategoriesPage from "@/pages/admin/CategoriesPage";
 
 
 export const adminRoutes = (
@@ -19,6 +20,8 @@ export const adminRoutes = (
        <Route path="users" element={<UsersPage />} />
        <Route path="tutors" element={<Instructors />} />
        <Route path="applications" element={<InstructorApplicationsPage />} />
+       <Route path="categories" element={<CategoriesPage />} />
+       
        </Route>
        </Route>
     </>
