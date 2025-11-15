@@ -4,6 +4,7 @@ import ProtectedRoute from "./protected.routes";
 import { UserRole } from "@/lib/constants/role";
 import DashboardLayout from "@/components/admin/layout/DashboardLayout";
 import Dashboard from "@/pages/admin/Dashboard";
+import UsersPage from "@/pages/admin/UserPage";
 
 
 export const adminRoutes = (
@@ -13,6 +14,7 @@ export const adminRoutes = (
        <Route path="/admin" element={<DashboardLayout />}>
        <Route index element={<Navigate to="/admin/dashboard" replace />} />
        <Route path="dashboard" element={<Dashboard />} />
+       <Route path="users" element={<UsersPage />} />
        </Route>
        </Route>
     </>

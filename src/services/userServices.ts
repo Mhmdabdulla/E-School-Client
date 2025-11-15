@@ -61,7 +61,7 @@ export const getApplications = async () => {
 
 };
 
-export const getUsers = async (page:number,limit:number,searchQuery:string): Promise<AxiosResponse> => {
+export const getUsers = async (page:number,limit:number,searchQuery:string) => {
  try {
   const res = await apiClient.get(`/users`, {params: {
     page,
