@@ -6,6 +6,7 @@ import DashboardLayout from "@/components/admin/layout/DashboardLayout";
 import Dashboard from "@/pages/admin/Dashboard";
 import UsersPage from "@/pages/admin/UserPage";
 import Instructors from "@/pages/admin/Instructors";
+import InstructorApplicationsPage from "@/pages/admin/InstructorApplications";
 
 
 export const adminRoutes = (
@@ -17,6 +18,7 @@ export const adminRoutes = (
        <Route path="dashboard" element={<Dashboard />} />
        <Route path="users" element={<UsersPage />} />
        <Route path="tutors" element={<Instructors />} />
+       <Route path="applications" element={<InstructorApplicationsPage />} />
        </Route>
        </Route>
     </>
