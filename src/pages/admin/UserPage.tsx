@@ -180,7 +180,7 @@ const UsersPage = () => {
           </Table>
         </CardContent>
       </Card>
-      { totalPages > 1 &&
+      { totalPages > 0 &&
       <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages}/>
       }
       <ConfirmDialog

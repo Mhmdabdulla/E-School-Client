@@ -173,7 +173,7 @@ const OrdersPage = () => {
   />
 )}
 
-      {!isLoading && totalPages > 1 && (
+      {!isLoading && totalPages > 0 && (
         <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages} />
       )}
     </div>

@@ -1,6 +1,6 @@
 import { fetchAllCategories } from "../services/categoryService";
 import type { Category } from "../types/category";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useCategory = () => {
     const [loading, setLoading] = useState(true)
@@ -12,7 +12,7 @@ export const useCategory = () => {
 
     const categoriesPerPage = 10
    
-    const fetchCategories = useCallback(async (page: number, limit: number, search: string, filter: string) => {
+    const fetchCategories = async (page: number, limit: number, search: string, filter: string) => {
         try {
             setLoading(true)
             const response = await fetchAllCategories({
@@ -30,7 +30,7 @@ export const useCategory = () => {
             setLoading(false)
             console.log(categories)
         }
-    },[categories])
+    }
     
     useEffect(() => {
       const getCategories = async () => {
@@ -43,7 +43,8 @@ export const useCategory = () => {
         }
       }
       getCategories()
-    },[currentPage, searchQuery, filter, totalPages, fetchCategories])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[currentPage, searchQuery, filter, totalPages])
 
     const refetch = () => {
         fetchCategories(currentPage, categoriesPerPage, searchQuery, filter as string);

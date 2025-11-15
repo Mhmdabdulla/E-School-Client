@@ -7,7 +7,7 @@ import ActionPanel from "@/components/admin/category/action-panel";
 import { trackCategoryChanges } from "@/utils/category";
 import type { Category } from "@/types/category";
 import CategoryTable from "@/components/admin/category/category-table";
-import { GenericPagination } from "../../components/common/pagination";
+import { GenericPagination } from "@/components/common/pagination";
 
 export default function CategoriesPage() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);

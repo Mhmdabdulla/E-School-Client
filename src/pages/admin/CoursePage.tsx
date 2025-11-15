@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 
+
 const CoursesPage = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [page, setPage] = useState<number>(1);
@@ -183,7 +184,7 @@ const CoursesPage = () => {
         </CardContent>
       </Card>
 
-      {!isLoading && totalPages > 1 && (
+      {!isLoading && totalPages > 0 && (
         <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages} />
       )}
 
@@ -199,8 +200,7 @@ const CoursesPage = () => {
       setSelectedCourseId(null);
       }}
       />
-
-    </div>
+      </div>
   );
 };
 

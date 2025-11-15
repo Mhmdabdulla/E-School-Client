@@ -202,7 +202,7 @@ export default function PayoutRequestsPage() {
         />
       )}
 
-      {totalPages > 1 && <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages} />}
+       <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages} />
 
       <Dialog open={isRejectDialogOpen} onOpenChange={setIsRejectDialogOpen}>
         <DialogContent>
