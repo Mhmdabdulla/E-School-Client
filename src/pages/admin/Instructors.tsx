@@ -1,3 +1,4 @@
+import { ConfirmDialog } from "@/components/common/ConfirmationDialog";
 import { GenericPagination } from '@/components/common/pagination'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -23,6 +24,9 @@ const Instructors = () => {
   const [search, setSearch] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string>("")
 
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState<boolean>(false);
+
   useEffect(()=> {
     const debouce = setTimeout(()=>{
         setSearchQuery(search)
@@ -43,15 +47,19 @@ const Instructors = () => {
     }
   },[limit, page, searchQuery])
   
-  const handleStatusChange = async(userId: string) => {
-    try {
-      await toggleUserStatus(userId); // server handles the toggle
+  const confirmChangeStatus = async () => {
+    if (!selectedUserId) return;
 
-      toast.info("Instructor status changed successfully");
+    try {
+      await toggleUserStatus(selectedUserId);
+
+      toast.success("Instructor status changed successfully", {
+        position: "top-right",
+      });
   
       setInstructors(prev =>
         prev.map(inst =>
-          typeof inst.userId === "object" && inst.userId._id === userId
+          typeof inst.userId === "object" && inst.userId._id === selectedUserId
             ? {
                 ...inst,
                 userId: {
@@ -63,104 +71,117 @@ const Instructors = () => {
         )
       );
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error("Error while changing instructor status", {
+        position: "top-right",
+      });
     }
-  }
+
+    setConfirmDialogOpen(false);
+    setSelectedUserId(null);
+  };
 
   useEffect(()=> {
     getAllInstructors()
   },[getAllInstructors, page, searchQuery])
+
   return (
     <div className="flex-1 space-y-4 md:pl-64">
-    <div className="flex items-center justify-between mt-2">
-      <h2 className="text-3xl font-bold tracking-tight">Tutors</h2>
-      <div className="flex items-center gap-2">
-      <Input
-          placeholder="Search...."
-          value={search}
-          onChange={(e:React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value) }
+      <div className="flex items-center justify-between mt-2">
+        <h2 className="text-3xl font-bold tracking-tight">Tutors</h2>
+        <div className="flex items-center gap-2">
+          <Input
+            placeholder="Search...."
+            value={search}
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value) }
           />
+        </div>
       </div>
-    </div>
-    <Card>
-      <CardContent>
-        <table className="w-full">
-          <thead>
-            <TableRow>
-              <TableHead>Instructor</TableHead>
-              <TableHead>Expertise</TableHead>
-              {/* <TableHead>Courses</TableHead> */}
-              <TableHead>Primary Language</TableHead>
-              <TableHead>Current Occupation</TableHead> 
-              {/* <TableHead>Students</TableHead>  */}
-              {/* <TableHead>Rating</TableHead> */}
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </thead>
-          <TableBody>
-            {instructors.map((instructor) => {
-              const instructorDetails = instructor.userId as IUser 
-              return (
-                <TableRow key={instructor._id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar>
-                        <AvatarImage src={instructorDetails.profileImageUrl} alt={instructorDetails.name} />
-                        <AvatarFallback>
-                          {instructorDetails.name.split(" ").map((n) => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <div className="font-medium">{instructorDetails.name}</div>
-                        <div className="text-sm text-muted-foreground">{instructorDetails.email}</div>
+      <Card>
+        <CardContent>
+          <table className="w-full">
+            <thead>
+              <TableRow>
+                <TableHead>Instructor</TableHead>
+                <TableHead>Expertise</TableHead>
+                <TableHead>Primary Language</TableHead>
+                <TableHead>Current Occupation</TableHead> 
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </thead>
+            <TableBody>
+              {instructors.map((instructor) => {
+                const instructorDetails = instructor.userId as IUser 
+                return (
+                  <TableRow key={instructor._id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <Avatar>
+                          <AvatarImage src={instructorDetails.profileImageUrl} alt={instructorDetails.name} />
+                          <AvatarFallback>
+                            {instructorDetails.name.split(" ").map((n) => n[0]).join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-medium">{instructorDetails.name}</div>
+                          <div className="text-sm text-muted-foreground">{instructorDetails.email}</div>
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{instructor.preferredSubjects[0]}</TableCell>
-                  <TableCell className='text-center'>{ instructor.teachingLanguages[0]}</TableCell>
-                  <TableCell>{instructor.currentOccupation}</TableCell>
-                  {/* <TableCell>
-                    <div className="flex items-center">
-                      {instructor.rating}
-                      <Star className="ml-1 h-4 w-4 fill-primary text-primary" />
-                    </div>
-                  </TableCell> */}
-                  <TableCell>
-                    <Badge variant={instructorDetails.status === "active" ? "default" : "destructive"}>
-                      {instructorDetails.status === "active" ? "Active" : "Blocked"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                          <span className="sr-only">Open menu</span>
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        {/* <DropdownMenuItem>View profile</DropdownMenuItem>
-                        <DropdownMenuItem>View courses</DropdownMenuItem> */}
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => handleStatusChange(instructorDetails._id)}>
-                          {instructorDetails.status === "active" ? "Block tutor" : "Unblock tutor"}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </table>
-      </CardContent>
-    </Card>
-    { totalPages > 1 &&
-          <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages}/>
-          }
-  </div>
+                    </TableCell>
+                    <TableCell>{instructor.preferredSubjects[0]}</TableCell>
+                    <TableCell className='text-center'>{instructor.teachingLanguages[0]}</TableCell>
+                    <TableCell>{instructor.currentOccupation}</TableCell>
+                    <TableCell>
+                      <Badge variant={instructorDetails.status === "active" ? "default" : "destructive"}>
+                        {instructorDetails.status === "active" ? "Active" : "Blocked"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">Open menu</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setSelectedUserId(instructorDetails._id);
+                              setConfirmDialogOpen(true);                           
+                            }}
+                          >
+                            {instructorDetails.status === "active" ? "Block tutor" : "Unblock tutor"}
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </table>
+        </CardContent>
+      </Card>
+      {totalPages > 1 &&
+        <GenericPagination currentPage={page} onPageChange={setPage} totalPages={totalPages}/>
+      }
+      <ConfirmDialog
+        open={confirmDialogOpen}
+        title="Change instructor status?"
+        description="Are you sure you want to block/unblock this instructor?"
+        confirmText="Yes"
+        cancelText="No"
+        onConfirm={confirmChangeStatus}
+        onCancel={() => {
+          setConfirmDialogOpen(false);
+          setSelectedUserId(null);
+        }}
+      />
+    </div>
   )
 }
 
