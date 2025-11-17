@@ -1,15 +1,14 @@
-import {type EnrolledCourse } from "@/types/enrollment"
+import { type Enrollment } from "@/types/enrollment"
 import EnrolledCourseCard from "../enrolled-courses/enrolled-courses-card"
 import { Button } from "../../ui/button"
 import { Link } from "react-router-dom"
 
 interface CourseCarouselProps {
-  courses: EnrolledCourse[] | null
+  enrollments: Enrollment[] | null
 }
 
-export function CourseCarousel({ courses }: CourseCarouselProps) {
-  const hasCourses = courses && courses.length > 0
-
+export function CourseCarousel({ enrollments }: CourseCarouselProps) {
+  const hasCourses = enrollments && enrollments.length > 0
   return (
     <div className="mb-12">
       <div className="flex justify-between items-center mb-6">
@@ -20,8 +19,8 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
 
       {hasCourses ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {courses!.map((course) => (
-            <EnrolledCourseCard key={course._id} enrolledCourse={course} />
+          {enrollments!.map((enrollment) => (
+            <EnrolledCourseCard key={enrollment.id} enrolledCourse={enrollment} />
           ))}
         </div>
       ) : (

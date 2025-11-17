@@ -1,4 +1,4 @@
-import type { EnrolledCourse } from "./enrollment";
+import type { Enrollment } from "./enrollment";
 
 export interface IUser {
     _id:string
@@ -20,5 +20,6 @@ export interface IUser {
     activeCourses: number
     completedCourses: number
     instructors: number
-    enrollments: EnrolledCourse[] | null
+    enrollments: Enrollment[] | null
   }
+

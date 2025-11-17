@@ -90,7 +90,7 @@ export const toggleUserStatus = async (userId: string): Promise<AxiosResponse> =
   }
 };
 
-export const getUserDashboard = async (): Promise<AxiosResponse> => {
+export const getUserDashboard = async () => {
   try {
     const res = await apiClient.get("/users/dashboard");
     return res.data;

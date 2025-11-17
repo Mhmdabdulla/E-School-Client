@@ -17,6 +17,10 @@ import InstructorApply from "@/pages/user/InstructorApply";
 
 export const userRoutes = (
     <>
+     <Route path="/payment-success" element={<PaymentSuccess />} />
+    <Route path="/payment-cancel" element={<PaymentFailed />} />
+
+    
     <Route element={<ProtectedRoute role={[UserRole.USER]} />}>
     <Route path="/profile" element={<UserProfile />} />
     <Route path="/courses/watch/:courseId" element={<WatchCoursePage />} />
