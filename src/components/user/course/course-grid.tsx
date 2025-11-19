@@ -41,12 +41,12 @@ export function CourseGrid({ courses, loading, isFilterOpen }: CourseGridProps) 
     >
       {courses.map((course,id) => (
       <motion.div
-      key={id}
+      key={course._id}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <CourseCard key={course._id} course={course} />
+      <CourseCard key={id} course={course} />
         </motion.div>
       ))}
     </div>
