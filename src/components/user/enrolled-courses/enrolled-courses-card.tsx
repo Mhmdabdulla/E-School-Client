@@ -1,17 +1,16 @@
 import { Button } from "../../ui/button";
 import { Progress } from "@/components/ui/progress";
-import { type Course } from "@/types/course";
-import { type EnrolledCourse } from "@/types/enrollment";
+import {  type Enrollment } from "@/types/enrollment";
 import { Link } from "react-router-dom";
 
 interface EnrolledCourseCardProps {
-  enrolledCourse: EnrolledCourse;
+  enrolledCourse: Enrollment;
 }
 
 export default function EnrolledCourseCard({
   enrolledCourse,
 }: EnrolledCourseCardProps) {
-  const course = enrolledCourse.courseId as Course;
+  const course = enrolledCourse.course;
   return (
     <div className="flex flex-col border rounded-lg overflow-hidden">
       <div className="relative h-40 w-full overflow-hidden">
@@ -40,7 +39,7 @@ export default function EnrolledCourseCard({
               </span>
             </div>
           )}
-          <Link to={`/courses/watch/${course._id}`}>
+          <Link to={`/courses/watch/${course.id}`}>
             <Button className={`w-full`} size="sm">
               Watch Lecture
             </Button>

@@ -21,3 +21,24 @@ export interface EnrolledCourse {
     coursesSold: number;
     studentCount: number;
   }
+
+
+  export interface Enrollment {
+  id: string;
+  course: {
+    id: string;
+    title: string;
+    subtitle: string;
+    thumbnail: string;
+    price: number;
+    rating: number;
+    isFree: boolean;
+  };
+  progress: {
+    totalLessons: number;
+    completedLessonsCount: number;
+    percentage: number;
+    lastVisited: string | null;
+  };
+  enrolledAt: string; // backend gives Date, frontend receives string
+}

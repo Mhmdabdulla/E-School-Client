@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import { CourseCarousel } from "./course-carousel";
 import { StatsCards } from "./stats-cards";
 import { getUserDashboard } from "../../../services/userServices";
-import {type EnrolledCourse } from "@/types/enrollment";
+import { type Enrollment } from "@/types/enrollment";
 import {type DashboardData } from "@/types/user";
 
 export default function DashboardPage() {
 
-  const [enrollments, setEnrollments] = useState<EnrolledCourse[] | null>([])
+  const [enrollments, setEnrollments] = useState<Enrollment[] | null>([])
   const [dashboardData, setDashboardData] = useState<DashboardData| null>(null)
 
   const fetchUserDashboard = async() => {
@@ -28,7 +28,7 @@ export default function DashboardPage() {
 
         <StatsCards dashboardData={dashboardData} />
 
-        <CourseCarousel courses={enrollments} />
+        <CourseCarousel enrollments={enrollments} />
       </main>
 
       {/* <DashboardFooter /> */}

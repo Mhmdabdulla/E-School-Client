@@ -94,7 +94,7 @@ export const login = async (email: string, password: string, dispatch: AppDispat
     if (axios.isAxiosError(error)) {
       return error.response as AxiosResponse;;
     }
-    throw error; 
+    throw error;
   }
 };
 
@@ -115,7 +115,7 @@ export const userLogout = async (dispatch: AppDispatch): Promise<AxiosResponse> 
   }
 };
 
-export const refreshToken = async (dispatch: AppDispatch): Promise<AxiosResponse> => {
+export const refreshToken = async (dispatch: AppDispatch)=> {
   try {
     const isAdmin = localStorage.getItem("adminLoggedIn");
     let data = { role: "user" };
