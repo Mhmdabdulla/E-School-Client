@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchEnrolledCourses } from "@/services/enrollmentServices";
-import { type EnrolledCourse } from "@/types/enrollment";
+import {  type Enrollment } from "@/types/enrollment";
 
 interface UseEnrolledCoursesProps { 
   userId: string | undefined;
 }
 
 export function useEnrolledCourses({ userId }: UseEnrolledCoursesProps) {
-  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([]);
+  const [enrolledCourses, setEnrolledCourses] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const [currentPage, setCurrentPage] = useState(1);

@@ -24,9 +24,9 @@ export interface EnrolledCourse {
 
 
   export interface Enrollment {
-  id: string;
+  _id: string;
   course: {
-    id: string;
+    _id: string;
     title: string;
     subtitle: string;
     thumbnail: string;

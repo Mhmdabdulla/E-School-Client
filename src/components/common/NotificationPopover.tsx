@@ -93,7 +93,6 @@ function NotificationItem({ notification }: { notification: Notification }) {
 
 export default function NotificationPopover() {
   const notifications = useAppSelector((state) => state.notification.notifications);
-  console.log('notifications',notifications)
   const unreadCount = notifications.filter((n) => !n.isRead).length;
   const dispatch = useAppDispatch();
 
