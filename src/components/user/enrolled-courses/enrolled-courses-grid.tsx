@@ -1,8 +1,8 @@
 import CourseCard from "./enrolled-courses-card"
-import { type EnrolledCourse } from "@/types/enrollment"
+import {  type Enrollment } from "@/types/enrollment"
 
 interface CourseGridProps {
-    enrolledCourses: EnrolledCourse[]
+    enrolledCourses: Enrollment[]
 }
 export default function CoursesGrid({enrolledCourses}:CourseGridProps) {
   

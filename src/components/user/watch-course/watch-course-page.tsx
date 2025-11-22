@@ -26,6 +26,7 @@ export default function WatchCoursePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const { courseId } = useParams();
 
+
   const getEnrolledCourse = async () => {
     try {
       const data = await fetchEnrolledCourseWithModulesAndLessons(courseId as string);
@@ -49,37 +50,40 @@ export default function WatchCoursePage() {
 
   const allLessons: Lesson[] = courseDetails?.modules?.flatMap((module: any) => module.lessons || []) || [];
 
-  const handleVideoEnd = async () => {
-    if (!enrolledCourse?.progress.completedLessons.includes(currentLesson?._id.toString() as string)) {
-      try {
-        const data = await completeLesson(currentLesson?.courseId as string, currentLesson?._id as string);
-        setEnrolledCourse(data.enrollment);
-        const currentIndex = allLessons.findIndex((l) => l._id === currentLesson?._id);
-        const nextLesson = allLessons[currentIndex + 1];
-        console.log(nextLesson);
-        if (nextLesson) {
-          setCurrentLesson(nextLesson);
-          await updateLastVisitedLesson(nextLesson?.courseId as string, nextLesson?._id as string);
-        }
-      } catch (error: any) {
-        const message = error?.data?.message || "Could not complete the lesson";
-        toast.error(message);
-      }
-    } else {
-      const currentIndex = allLessons.findIndex((l) => l._id === currentLesson?._id);
-      const nextLesson = allLessons[currentIndex + 1];
-      if (nextLesson) {
-        setCurrentLesson(nextLesson);
-        setCurrentLesson(nextLesson);
-        await updateLastVisitedLesson(nextLesson?.courseId as string, nextLesson?._id as string);
-      }
+const handleVideoEnd = async () => {
+  if (!currentLesson?._id) return;
+
+  try {
+    // STEP 1: Mark this lesson as visited
+    await updateLastVisitedLesson(currentLesson.courseId, currentLesson._id);
+
+    // STEP 2: Now complete the lesson
+    const data = await completeLesson(currentLesson.courseId, currentLesson._id);
+    setEnrolledCourse(data.enrollment);
+
+    // STEP 3: Move to next lesson
+    const currentIndex = allLessons.findIndex(l => l._id === currentLesson._id);
+    const nextLesson = allLessons[currentIndex + 1];
+
+    if (nextLesson) {
+      setCurrentLesson(nextLesson);
     }
-  };
+  } catch (error: any) {
+    toast.error(error?.message || "Could not complete the lesson");
+  }
+};
 
   useEffect(() => {
     getEnrolledCourse();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+  if (currentLesson) {
+    updateLastVisitedLesson(currentLesson.courseId, currentLesson._id);
+  }
+}, [currentLesson]);
+
 
   const totalLessons = courseDetails?.modules?.reduce((total, module) => {
     return total + (module.lessons ? module.lessons.length : 0);

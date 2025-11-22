@@ -39,7 +39,7 @@ export default function EnrolledCourseCard({
               </span>
             </div>
           )}
-          <Link to={`/courses/watch/${course.id}`}>
+          <Link to={`/courses/watch/${course._id}`}>
             <Button className={`w-full`} size="sm">
               Watch Lecture
             </Button>
