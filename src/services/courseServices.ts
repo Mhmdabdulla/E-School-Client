@@ -1,6 +1,7 @@
 import type {  GetCoursesRequestParams, UserCourseFilterParams } from "@/types/course";
 import apiClient from "@/lib/axios";
 import axios, { AxiosError, type AxiosResponse } from "axios";
+import qs from 'qs'
 
 export const getCourseById = async (courseId: string) => {
 
@@ -8,32 +9,12 @@ export const getCourseById = async (courseId: string) => {
     return res;
 };
 
-export const getAllCourses = async ({
-  page,
-  limit,
-  searchQuery,
-  category,
-  subCategory,
-  sortBy,
-  level,
-  priceMax,
-  priceMin,
-  duration,
-}: UserCourseFilterParams) => {
+export const getAllCourses = async (params: UserCourseFilterParams) => {
   try {
     const res: AxiosResponse = await apiClient.get("/courses", {
-      params: {
-        page,
-        limit,
-        searchQuery,
-        category,
-        subCategory,
-        sortBy,
-        level,
-        priceMax,
-        priceMin,
-        duration,
-      },
+      params,
+      paramsSerializer: (params) =>
+        qs.stringify(params, { arrayFormat: "repeat" }),
     });
     return res.data;
   } catch (error: unknown) {
