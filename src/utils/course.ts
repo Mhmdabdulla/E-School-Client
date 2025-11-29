@@ -105,7 +105,7 @@ export const createLessonData = (lesson:Lecture, courseId?:string,moduleId?:stri
                   name: lesson.title,
                   isExpanded: true,
                   duration: lesson.duration,
-                  content: `http://localhost:5000/api/lessons/${lesson._id}/stream`,
+                  content: `${import.meta.env.VITE_BASE_URL}/lessons/${lesson._id}/stream`,
               })),
           })),
       };
