@@ -31,6 +31,10 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    if (originalRequest.url.includes("auth/admin/login")) {
+      return Promise.reject(error);
+    }
+
     // avoid refreshing the refresh-token request itself
     if (originalRequest.url.includes("auth/refresh-token")) {
       return Promise.reject(error);
