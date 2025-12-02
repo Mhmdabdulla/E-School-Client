@@ -35,9 +35,9 @@ export const createPayoutRequest = async (data: PayoutRequest) => {
     }
 }
 
-export const fetchPayoutRequests = async () => {
+export const fetchPayoutRequests = async (page: number = 1, limit: number = 10) => {
     try {
-        const res = await apiClient.get("/payouts")
+        const res = await apiClient.get(`/payouts?page=${page}&limit=${limit}`)
         return res.data
     } catch (error) {
         console.log(error)
