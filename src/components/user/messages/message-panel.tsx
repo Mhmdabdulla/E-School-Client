@@ -52,18 +52,22 @@ export function MessagePanel({ activeChatId, onBackClick }: MessagePanelProps) {
       content.append("attachment", file)
     }
 
-    dispatch(sendMessage({ chatId: activeChatId as string, content }));
-    dispatch(
+    dispatch(sendMessage({ chatId: activeChatId as string, content }))
+    .unwrap()
+    .then((message)=>{
+          dispatch(
       updateChat({
         _id: activeChatId,
         lastMessage: {
-          body: content,
+          body: message.body,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         },
-        updatedAt: new Date().toISOString(),
+        updatedAt: message.updatedAt,
       })
     );
+    })
+
   };
 
   if (!activeChatId) {

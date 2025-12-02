@@ -51,7 +51,8 @@ export default function CartPage() {
   }
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0)
-  const tax = subtotal * 0.18;
+  // const tax = subtotal * 0.18;
+  const tax = 0
 
   return (
     <>

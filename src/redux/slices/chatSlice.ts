@@ -33,10 +33,21 @@ const chatSlice = createSlice({
       state.chats.unshift(action.payload);
     },
     updateChat(state, action) {
-      const index = state.chats.findIndex(chat => chat._id === action.payload._id);
+      const newChatData = action.payload;
+      const chatIdToUpdate = newChatData._id;
+      const index = state.chats.findIndex(chat => chat._id === chatIdToUpdate);
+      let updatedChat: Chat;
       if (index !== -1) {
-        state.chats[index] = { ...state.chats[index], ...action.payload };
+        updatedChat = {
+          ...state.chats[index],
+          ...newChatData
+        }
+        
+        state.chats.splice(index, 1);
+      }else{
+        updatedChat = newChatData as Chat
       }
+      state.chats.unshift(updatedChat);
     },
     clearChat(state) {
       state.chats = []

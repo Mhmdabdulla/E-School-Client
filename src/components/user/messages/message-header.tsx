@@ -35,7 +35,8 @@ export function MessageHeader({ name, avatar, online, onBackClick }: MessageHead
         </div>
         <div>
           <h2 className="font-medium">{name}</h2>
-          {online && <p className="text-xs text-muted-foreground">Online</p>}
+          {online == true? <p className="text-xs text-muted-foreground">Online</p>:
+          <p className="text-xs text-muted-foreground">Offline</p>}
         </div>
       </div>
       <Button variant="ghost" size="icon">
