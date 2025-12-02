@@ -18,6 +18,10 @@ export default function EarningsPage() {
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [payoutHistory, setPayoutHistory] = useState<PayoutRequestData[] >([])
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+  const ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
     getWallet();
@@ -34,20 +38,28 @@ export default function EarningsPage() {
     } 
   };
 
-  const getPayoutRequestHistory = async () => {
+  const getPayoutRequestHistory = async (page:number = 1) => {
     try {
-      const data = await fetchPayoutRequests()
-      setPayoutHistory(data)
+      setIsLoadingHistory(true);
+      const data = await fetchPayoutRequests(page,ITEMS_PER_PAGE)
+      setPayoutHistory(data.payouts)
+      setTotalPages(data.totalPages);
+      setCurrentPage(page);
     } catch (error) {
       console.log(error)
+    }finally{
+      setIsLoadingHistory(false)
     }
   }
 
   const handlePayoutRequestSubmit = async (data: PayoutRequest) => {
     try {
       setFormSubmitting(true);
-      const {payout} = await createPayoutRequest(data);
-      setPayoutHistory(prev => [payout, ...prev])
+      // const {payout} = await createPayoutRequest(data);
+      // setPayoutHistory(prev => [payout, ...prev])
+      await createPayoutRequest(data);
+      // Refresh the current page instead of manually prepending
+      await getPayoutRequestHistory(currentPage);
       setOpen(false);
       setFormSubmitting(false);
       toast.success("withdraw request is send successfully.");
@@ -85,7 +97,13 @@ export default function EarningsPage() {
                   />
                 }
               />
-              <WithdrawalHistory withdrawals={payoutHistory} />
+              <WithdrawalHistory 
+              withdrawals={payoutHistory}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={getPayoutRequestHistory}
+              isLoading={isLoadingHistory}
+              />
             </div>
           </div>
         </div>

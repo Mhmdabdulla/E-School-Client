@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import {type PayoutRequestData } from "@/types/revenue"
+import { CoursePagination } from "../common/pagination";
 
 // const withdrawals = [
 //   {
@@ -42,10 +43,14 @@ import {type PayoutRequestData } from "@/types/revenue"
 // ]
 
 interface WithdrawalHistoryProps {
-  withdrawals: PayoutRequestData[]
+  withdrawals: PayoutRequestData[],
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  isLoading?: boolean;
 }
 
-export function WithdrawalHistory({withdrawals}: WithdrawalHistoryProps) {
+export function WithdrawalHistory({withdrawals,currentPage,totalPages,onPageChange,isLoading=false}: WithdrawalHistoryProps) {
   return (
     <Card>
       <CardHeader>
@@ -91,6 +96,17 @@ export function WithdrawalHistory({withdrawals}: WithdrawalHistoryProps) {
             ))}
           </TableBody>
         </Table>
+
+        {/* Pagination Controls */}
+        {!isLoading && totalPages > 0 && (
+          <div className="flex justify-center mt-4">
+            <CoursePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
+          </div>
+        )}
       </CardContent>
     </Card>
   )
