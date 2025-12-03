@@ -10,12 +10,14 @@ export interface AdminDashboardStats {
   totalUsers: number | null;
   totalTutors: number | null;
   totalCourses: number | null;
+  totalRevenue: number | null;
 }
 
 const DashboardPage = () => {
   const [dashboardData, setDashboardData] = useState<AdminDashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
   const [recentOrders, setRecentOrders] = useState<IOrder[]>([])
+
   useEffect(()=> {
     const fetchDashboardData = async()=> {
       try {
@@ -95,7 +97,7 @@ const DashboardPage = () => {
           <DollarSign className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">₹45,231.89</div>
+          <div className="text-2xl font-bold">{`₹${dashboardData?.totalRevenue}`}</div>
           <p className="text-xs text-muted-foreground">
             <span className="text-rose-500 flex items-center">
               <ArrowDownRight className="mr-1 h-4 w-4" />
