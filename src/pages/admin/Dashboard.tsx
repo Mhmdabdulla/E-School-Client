@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
-import { getAdminDashboard } from '@/services/adminServices'
+import { fetchMonthlyRevenue, getAdminDashboard } from '@/services/adminServices'
 import { fetchRecentOrders } from '@/services/orderService';
 import {type IOrder } from '@/types/order';
 import {type IUser } from '@/types/user';
@@ -17,6 +17,7 @@ const DashboardPage = () => {
   const [dashboardData, setDashboardData] = useState<AdminDashboardStats | null>(null)
   const [loading, setLoading] = useState(true)
   const [recentOrders, setRecentOrders] = useState<IOrder[]>([])
+  const [monthlyRevenue, setMonthlyRevenue] = useState<{month:number,revenue:number}[]>([])
 
   useEffect(()=> {
     const fetchDashboardData = async()=> {
@@ -24,8 +25,13 @@ const DashboardPage = () => {
         const data = await getAdminDashboard()
         console.log(data)
         setDashboardData(data.dashboardDetails)
-        const orderData = await fetchRecentOrders(5)
+
+        const orderData = await fetchRecentOrders(7)
         setRecentOrders(orderData.orders)
+
+        const revenueData = await fetchMonthlyRevenue()
+        setMonthlyRevenue(revenueData)
+
         setLoading(false)
       } catch (error) {
         console.log(error)
@@ -122,7 +128,7 @@ const DashboardPage = () => {
         <th className="py-1 text-right">Revenue</th>
       </tr>
     </thead>
-    <tbody>
+    {/* <tbody>
       {[
         { month: "Jan", revenue: 12000 },
         { month: "Feb", revenue: 13550 },
@@ -130,13 +136,25 @@ const DashboardPage = () => {
         { month: "Apr", revenue: 17200 },
         { month: "May", revenue: 15500 },
         { month: "Jun", revenue: 13900 },
+        { month: "Jul", revenue: 16900 },
+        { month: "Aug", revenue: 14200 },
+        { month: "Sep", revenue: 12500 },
       ].map((r) => (
         <tr key={r.month}>
           <td className="py-1 pr-6">{r.month}</td>
           <td className="py-1 text-right font-medium">₹{r.revenue.toLocaleString()}</td>
         </tr>
       ))}
-    </tbody>
+    </tbody> */}
+    <tbody>
+  {monthlyRevenue.map((r, idx) => (
+    <tr key={idx}>
+      <td className="py-1 pr-6">{["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][idx]}</td>
+      <td className="py-1 text-right font-medium">₹{r.revenue.toLocaleString()}</td>
+    </tr>
+  ))}
+  </tbody>
+
   </table>
 </CardContent>
       </Card>
