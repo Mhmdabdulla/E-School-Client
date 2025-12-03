@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Heart, LogOut, Search, ShoppingCart, User, Menu,  Home, BookOpen, Info, Mail, Briefcase } from "lucide-react";
+import { Heart, LogOut, Search, ShoppingCart, User, Menu,  Home, BookOpen, Briefcase } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -9,11 +9,11 @@ import { userLogout } from "@/services/authServices";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/redux/store";
+import NotificationPopover from "@/components/common/NotificationPopover";
 
 const Header = () => {
   const user = useAppSelector((state) => state.auth.user);
-  // const cartCount = useAppSelector((state) => state.cart.cartItems.length);
-  const cartCount = 3;
+  const cartCount = useAppSelector((state) => state.cart.cartItems.length);
   const isAdmin = localStorage.getItem("adminLoggedIn") === "true";
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,8 +60,8 @@ const Header = () => {
   const navigationLinks = [
     { path: "/", label: "Home", icon: Home },
     { path: "/courses", label: "Courses", icon: BookOpen },
-    { path: "/about", label: "About", icon: Info },
-    { path: "/contact", label: "Contact", icon: Mail },
+    // { path: "/about", label: "About", icon: Info },
+    // { path: "/contact", label: "Contact", icon: Mail },
   ];
  
   return (
@@ -75,7 +75,8 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-              <BookOpen className="h-5 w-5 text-primary-foreground" />
+              {/* <BookOpen className="h-5 w-5 text-primary-foreground" /> */}
+              <img src="/e-school-logo.png" alt="" />
             </div>
             <span className="hidden sm:block text-xl font-bold">E-School</span>
           </Link>
@@ -128,6 +129,7 @@ const Header = () => {
           <div className="flex items-center gap-2">
             {user && !isAdmin ? (
               <>
+                <NotificationPopover />
                 {/* Wishlist - Desktop only */}
                 <Link to="/wishlist" className="hidden lg:block">
                   <Button variant="ghost" size="icon" className="relative">

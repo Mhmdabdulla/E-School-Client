@@ -23,6 +23,24 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
+    
+    const originalRequest = error.config;
+
+    // DO NOT REFRESH DURING LOGIN FAILURE
+    if (originalRequest.url.includes("auth/login")) {
+      return Promise.reject(error);
+    }
+
+    if (originalRequest.url.includes("auth/admin/login")) {
+      return Promise.reject(error);
+    }
+
+    // avoid refreshing the refresh-token request itself
+    if (originalRequest.url.includes("auth/refresh-token")) {
+      return Promise.reject(error);
+    }
+
+
     if (error.response.status === 401) {
       try {
         const newAccessToken = await refreshToken(store.dispatch);
