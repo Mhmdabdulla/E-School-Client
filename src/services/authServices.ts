@@ -155,5 +155,5 @@ export const resetPassword = async (token: string, newPassword: string) => {
 };
 
 export const googleLogin = () => {
-  window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
+  window.location.href = `${import.meta.env.VITE_BASE_URL}auth/google`;
 };
