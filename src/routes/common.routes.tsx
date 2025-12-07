@@ -6,12 +6,16 @@ import ProtectedRoute from "./protected.routes";
 import { UserRole } from "@/lib/constants/role";
 import UserCourseDetailsPage from "@/pages/user/CourseDetails";
 import CartPage from "@/pages/user/CartPage";
+import PaymentSuccess from "@/components/common/PaymentSuccess";
+import PaymentFailed from "@/components/common/PaymentFailed";
 
 export const commonRoutes = (
   <>
 
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Auth />} />
+    <Route path="/payment-success" element={<PaymentSuccess />} />
+    <Route path="/payment-cancel" element={<PaymentFailed />} />
     <Route
       element={<ProtectedRoute role={[UserRole.USER, UserRole.INSTRUCTOR]} />}
     >
