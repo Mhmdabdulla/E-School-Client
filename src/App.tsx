@@ -25,6 +25,7 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
+        await new Promise(res => setTimeout(res, 300));
          const user = await refreshToken(dispatch);
          if (user?.role !== "admin") {
           appDispatch(fetchCartItems());
