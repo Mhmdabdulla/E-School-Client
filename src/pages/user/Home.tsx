@@ -38,7 +38,7 @@ export default function Home() {
                     Start Learning
                   </Button>
                 </Link>
-                <Link to="/auth?mode=instructor">
+                <Link to="/be-instructor">
                   <Button size="lg" variant="outline" className="h-14 px-8 text-base font-semibold border-white/10 text-white hover:bg-white/5 hover:text-white rounded-full backdrop-blur-sm bg-transparent">
                      Become an Instructor
                   </Button>
